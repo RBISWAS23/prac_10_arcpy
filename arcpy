@@ -39,3 +39,8 @@ wilson_polygon = Wilson_Zoning_path + "_PolygonToPoint"
 arcpy.management.FeatureToPoint(Wilson_Zoning_path, wilson_polygon)
 
 print("Process Completed")
+
+wilson_polygon = Wilson_Zoning_path + "_PolygonToPoint"
+arcpy.management.FeatureToPoint(Wilson_Zoning_path, wilson_polygon)
+
+print("Process Completed")
