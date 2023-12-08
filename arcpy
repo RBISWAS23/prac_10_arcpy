@@ -264,8 +264,6 @@ import os
 # except Exception as e:
 #     print(f"An error occurred: {e}")
 # ---------- Document field properties feature class into a text file ----------------------------------------------------------------------------------------------------------------------------------------
-
-# --------------------------------------------------------------------------------------------------------------------------------------------------
 # # Step 1: Import required modules and set workspace
 # arcpy.env.workspace = r".gdb"
 
@@ -318,4 +316,156 @@ for fc in fc_list:
     print(f"Buffer created for {fc} with a {buffer_distance} buffer distance.")
     print("Process Completed")
 
+# **************  feature class into a feature layer ***********************************************************************************
+gdb_path = r".gdb"
+restaurant_fc_name = "Wilson_Restaurants"
 
+restaurant_fc_path = os.path.join(gdb_path, restaurant_fc_name)
+
+# Feature class to feature layer
+arcpy.management.MakeFeatureLayer(restaurant_fc_path,"restaurant_Layer")
+
+# Count of all the features before selection
+pre_count = arcpy.GetCount_management("restaurant_Layer")
+
+print("Total number of restaurants = {} ".format(pre_count))
+
+#******************* Print the crime count within 500 meters distance from all the restaurants **************
+gdb_path = r".gdb"
+restaurant_fc_name = "Wilson_Restaurants"
+crime_fc_name = "Wilson_Crimes96"
+
+restaurant_fc_path = os.path.join(gdb_path,restaurant_fc_name)
+crime_fc_path = os.path.join(gdb_path,crime_fc_name)
+
+arcpy.management.MakeFeatureLayer(restaurant_fc_path,"restaurant_lyr")
+arcpy.management.MakeFeatureLayer(crime_fc_path,"crime_lyr")
+
+# getting count of all the features before selection
+pre_count1=arcpy.GetCount_management("restaurant_lyr")
+pre_count3=arcpy.GetCount_management("crime_lyr")
+
+# Query
+arcpy.management.SelectLayerByLocation("crime_lyr","WITHIN_A_DISTANCE","restaurant_lyr","500 meters")
+post_count3 =arcpy.GetCount_management("crime_lyr")
+print('crime near 500 meters of restaurant = {}'.format(post_count3))
+
+print("Process Completed")
+
+# ***** Selection based on criteria ***************************************************************************************
+gdb_path = r".gdb"
+restaurant_fc_name = "Wilson_Restaurants"
+histdist_fc_name = "Wilson_Histdist"
+crime_fc_name = "Wilson_Crimes96"
+
+restaurant_fc_path = os.path.join(gdb_path,restaurant_fc_name)
+histdist_fc_path = os.path.join(gdb_path,histdist_fc_name)
+crime_fc_path = os.path.join(gdb_path,crime_fc_name)
+
+arcpy.management.MakeFeatureLayer(restaurant_fc_path,"restaurant_lyr")
+arcpy.management.MakeFeatureLayer(histdist_fc_path,"histdist_lyr")
+arcpy.management.MakeFeatureLayer(crime_fc_path,"crime_lyr")
+
+# getting count of all the features before selection
+pre_count1=arcpy.GetCount_management("restaurant_lyr")
+pre_count2=arcpy.GetCount_management("histdist_lyr")
+pre_count3=arcpy.GetCount_management("crime_lyr")
+
+print('Total Restaurants before selection = {}'.format(pre_count1[0]))
+print('Total historic district before selection = {}'.format(pre_count2[0]))
+print('Total crime before selection = {}'.format(pre_count3[0]))
+
+arcpy.management.SelectLayerByAttribute("restaurant_lyr","NEW_SELECTION","ALCOHOL=1")
+post_count1 = arcpy.GetCount_management("restaurant_lyr")
+print('total restaurants serves alcohol = {}'.format(post_count1))
+
+arcpy.management.SelectLayerByLocation("restaurant_lyr","WITHIN_A_DISTANCE","histdist_lyr","1000 feet","SUBSET_SELECTION")
+post_count2 =arcpy.GetCount_management("restaurant_lyr")
+print('total restaurants serves alcohol within 1000 feet of histdist = {}'.format(post_count2))
+
+arcpy.management.SelectLayerByLocation("crime_lyr","WITHIN_A_DISTANCE","restaurant_lyr","500 feet")
+post_count3 =arcpy.GetCount_management("crime_lyr")
+print('crime near 500 feet of restaurant = {}'.format(post_count3))
+
+arcpy.management.SelectLayerByAttribute("crime_lyr","SUBSET_SELECTION","ALCOHOL>0")
+post_count4 = arcpy.GetCount_management("crime_lyr")
+print('Alcohol related crime = {}'.format(post_count4))
+
+
+print("Process Completed")
+
+# ****** Use SearchCursor to print all the feature class **********************************
+gdp_path = r".gdb"
+fc_name = "MajorAttractions"
+fc_path = os.path.join(gdp_path,fc_name)
+
+field_list = ["NAME","ADDR"]
+
+with arcpy.da.SearchCursor(fc_path,field_list) as s_cursor:
+    for row in s_cursor:
+        print("Name:{} |  Address:{}".format(row[0], row[1]))
+    del s_cursor
+# ******  SearchCursor to append names on condition ***********************************************
+gdp_path = r".gdb"
+
+fc_name = "MajorAttractions"
+fc_path = os.path.join(gdp_path,fc_name)
+
+field_list = ["NAME","ADDR","ESTAB"]
+
+with arcpy.da.SearchCursor(fc_path,field_list,"ESTAB>1970") as s_cursor:
+    for row in s_cursor:
+        print("Name:{},  Establishment:{}".format(row[0], row[2]))
+    del s_cursor
+print("Process completed") 
+# ************** Print the features X and Y coordinates using the search cursor *******************
+gdp_path = r".gdb"
+
+fc_name = "MajorAttractions"
+fc_path = os.path.join(gdp_path,fc_name)
+
+field_list = ["NAME","SHAPE@X","SHAPE@Y"]
+print("-------------------------- majorAttraction and its coordinates -------------------------------")
+with arcpy.da.SearchCursor(fc_path,field_list) as s_cursor:
+    for row in s_cursor:
+        print("Name: {}, X-corrdinates:{},  Y-coordinates:{}".format(row[0],row[1], row[2]))
+    del s_cursor
+
+# ************* UpdateCursor to update the value in that field **************************************
+import arcpy
+import os
+gdp_path = r".gdb"
+fc_name = "Majo"
+
+fc_path = os.path.join(gdp_path,fc_name)
+
+field_list = ["NAME","ESTAB","HISTORIC"]
+
+with arcpy.da.UpdateCursor(fc_path,field_list) as U_cursor:
+    for row in U_cursor:
+
+        if row[1]<1960:
+            row[2] = "yes"
+        else:
+            row[2] = "No"
+        U_cursor.updateRow(row)
+
+print("Process Completed")
+
+# ------ Insert new values in attribute ----------------------------
+gdp_path = r".gdb"
+fc_name = "Major"
+
+fc_path = os.path.join(gdp_path,fc_name)
+
+field_list = ["NAME","ESTAB","ADDR","CITYNM","ZIP","EMP","ACRES"]
+
+record_1 = (" Five Star Restaurant",2021,"841 STREET","SAN DIEGO",92101,150,10)
+record_2 = (" New Town Restaurant ",2022,"842 STREET","SAN DIEGO",92105,140,15)
+
+i_cursor = arcpy.da.InsertCursor(fc_path,field_list)
+i_cursor.insertRow(record_1)
+i_cursor.insertRow(record_2)
+print("Process Completed")
+
+#***********************
