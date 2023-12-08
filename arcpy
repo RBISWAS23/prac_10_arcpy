@@ -1,0 +1,41 @@
+# ****************************** Arithmetic operations ************************************************************
+# number_1 = 45
+# number_2 = 63
+
+# addition = (number_1 + number_2)
+# subtraction = (number_1 - number_2)
+# multiplication = (number_1 * number_2)
+# division = (number_1/number_2)
+
+# print('addition = {}'.format(addition))
+# print('subtraction = {}'.format(subtraction))
+# print('multiplication = {}'.format(multiplication))
+# print('division = {}'.format(division))
+# print("Process Completed")
+
+# ******************************* Loop through a list ****************************************************************
+# number_list = [98, 49, 58, 100, 10, 5, 60, 53, 70, 35, 25, 45]
+# print("printing all integer ")
+# for l in number_list:
+#     print(l)
+#
+# print("printing the integer only if it is greater than 50")
+# for y in number_list:
+#     if y > 50:
+#         print(y)
+
+# ****************************** Creating Buffers ***************************************************
+import arcpy
+# Setting the default workspace
+# arcpy.env.workspace = r"D:\1_BVIEER\3rd_sem\Programming for GIS- III Mr. Ronit Jadhav\Assignments\Assignment_1\ProProject_Practical_One\Practical_One.gdb"
+
+# Corrected usage of arcpy.analysis.Buffer
+# arcpy.analysis.Buffer("Wilson_Schools", "Wilson_School_Buffer_500m", "500 Meters")
+# print("Process Completed")
+# ****************************** FeatureToPoint ******************************************************
+# Import arcpy package
+
+wilson_polygon = Wilson_Zoning_path + "_PolygonToPoint"
+arcpy.management.FeatureToPoint(Wilson_Zoning_path, wilson_polygon)
+
+print("Process Completed")
