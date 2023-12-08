@@ -1,3 +1,57 @@
+# ************************ Create a point geometry *************************************
+import arcpy
+import os
+x_delhi = 77.20852409389596
+y_delhi = 28.65392854307051
+point_obj = arcpy.Point(x_delhi,y_delhi)
+spatial_ref = arcpy.SpatialReference("WGS 1984")
+point_geom = arcpy.PointGeometry(point_obj,spatial_ref)
+gdp_path = 
+r".gdb"
+
+fc_name = "Delhi"
+fc_path = os.path.join(gdp_path,fc_name)
+arcpy.CopyFeatures_management(point_geom,fc_path)
+print("complete")
+
+# ************************* Create a line geometry ***********************************
+import arcpy
+import os
+x_mumbai = 72.875489101964
+y_mumbai = 19.077263120208265
+x_pune = 73.84366705841208
+y_pune = 18.51660637428715
+pt_obj_mumbai = arcpy.Point(x_mumbai,y_mumbai)
+pt_obj_pune = arcpy.Point(x_pune,y_pune)
+spatial_ref = arcpy.SpatialReference("WGS 1984")
+polyline_array = arcpy.Array()
+polyline_array.add(pt_obj_mumbai)
+polyline_array.add(pt_obj_pune)
+gdp_path = r".gdb"
+
+
+fc_name = "mumbai_pune"
+fc_path = os.path.join(gdp_path,fc_name)
+polyline_geom = arcpy.Polyline(polyline_array, spatial_ref)
+arcpy.CopyFeatures_management(polyline_geom,fc_path)
+print("complete")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # ****************************** Arithmetic operations ************************************************************
 # number_1 = 45
 # number_2 = 63
