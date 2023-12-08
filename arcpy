@@ -36,14 +36,80 @@ polyline_geom = arcpy.Polyline(polyline_array, spatial_ref)
 arcpy.CopyFeatures_management(polyline_geom,fc_path)
 print("complete")
 
+# ********* Create a Polygon Geometry ****************************************************
+import arcpy
+import os
+x_nagpur = 79.0878199554386
+y_nagpur = 21.147983062608986
 
+x_chandrapur = 79.29716613436133
+y_chandrapur = 19.959943613189097
 
+x_yavatmal = 78.12661054100442
+y_yavatmal = 20.39172688075951
 
+pt_obj_nagpur = arcpy.Point(x_nagpur,y_nagpur)
+pt_obj_chandrapur = arcpy.Point(x_chandrapur,y_chandrapur)
+pt_obj_yavatmal = arcpy.Point(x_yavatmal,y_yavatmal)
+spatial_ref = arcpy.SpatialReference("WGS 1984")
+polygon_array = arcpy.Array()
+polygon_array.add(pt_obj_nagpur)
+polygon_array.add(pt_obj_chandrapur)
+polygon_array.add(pt_obj_yavatmal)
+gdp_path = 
+r".gdb"
 
+fc_name = "Nagpur_chandrapur_yavatmal_polygon"
+fc_path = os.path.join(gdp_path,fc_name)
+polygon_geom = arcpy.Polygon(polygon_array, spatial_ref)
+arcpy.CopyFeatures_management(polygon_geom,fc_path)
+print("complete")
 
+# ************   Create a script tool in ArcGIS Pro *****************************************
+import arcpy
+import os
+gdp_path = arcpy.GetParameterAsText(0)
+if not arcpy.Exists("gdp_path"):
+ folder_path, gdp_name = os.path.split(gdp_path)
+ arcpy.management.CreateFileGDB(folder_path, gdp_name)
+ gdp_path = os.path.join(folder_path,gdp_name)
+x_coord = arcpy.GetParameterAsText(1)
+y_coord = arcpy.GetParameterAsText(2)
+output_fc_name = arcpy.GetParameterAsText(3)
+fc_path = os.path.join(gdp_path,output_fc_name)
+point_obj = arcpy.Point(x_coord,y_coord)
+spatial_ref = arcpy.SpatialReference("WGS 1984")
+point_geom = arcpy.PointGeometry(point_obj,spatial_ref)
+arcpy.CopyFeatures_management(point_geom,fc_path)
+print("complete")
 
+#------------------- export a featureclass into different types (KMZ, CAD).---------------------------
+import arcpy
+import os
+# defining script input
+fc_input_path = arcpy.GetParameterAsText(0)
+output_type = arcpy.GetParameterAsText(1)
+output_folder = arcpy.GetParameterAsText(2)
+file_name = arcpy.GetParameterAsText(3)
+arcpy.MakeFeatureLayer_management(fc_input_path,"FcLayer")
+if output_type == "KMZ":
+ output_kml_file = "{}.KMZ".format(file_name)
+ full_output_kmz_path = 
+os.path.join(output_folder,output_kml_file)
+ 
+arcpy.conversion.LayerToKML("FcLayer",full_output_kmz_path)
+ print('exported')
+elif output_type == "CAD":
+ output_CAD_file = "{}.dwg".format(file_name)
+ full_output_CAD_path = 
+os.path.join(output_folder,output_CAD_file)
+ # Process: Export to CAD
+ arcpy.conversion.ExportCAD(fc_input_path, "DWG_R2018", 
+full_output_CAD_path,"USE_FILENAMES_IN_TABLES","OVERWRITE_EXISTING_FILES"
 
-
+** Get the list of maps in the current ProProject****************************************************
+import arcpy
+pro_project_path = r".aprx"
 
 
 
