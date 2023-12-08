@@ -44,3 +44,278 @@ wilson_polygon = Wilson_Zoning_path + "_PolygonToPoint"
 arcpy.management.FeatureToPoint(Wilson_Zoning_path, wilson_polygon)
 
 print("Process Completed")
+
+# ******************************* Describe the feature class *********************************************************
+
+# # Specify the path to the feature class
+# fc_path = r''
+
+# desc = arcpy.Describe(fc_path)
+
+# # Access and print specific properties
+# print(f"Feature Class Name: {desc.name}")
+# print(f"Data Type: {desc.dataType}")
+# print(f"Shape Type: {desc.shapeType}")
+
+# ************************************************ Append a new value **********************************************************
+# # Create a list of city names
+# cities = ["Kolkata", "Delhi", "Mumbai", "Chennai", "Darjeeling"]
+#
+# # Append a new city to the list
+# new_city = "Pune"
+# cities.append(new_city)
+#
+# # Print the updated list
+# print(cities)
+************************************************  Print the length of the list **********************************************************
+# Create a list of city names
+# cities = ["Kolkata", "Delhi", "Mumbai", "Chennai", "Darjeeling"]
+#
+# # Append a new city to the list
+# new_city = "Pune"
+# cities.append(new_city)
+#
+# # # Print the updated list
+# print(cities)
+#
+# # Print the length of the list
+# print("Length of the list:", len(cities))
+
+# Remove an element ---------------------------
+# Create a list of city names
+# cities = ["Kolkata", "Delhi", "Mumbai", "Chennai", "Darjeeling"]
+
+# # Remove the element at index 2 (third element)
+# removed_city = cities.pop(2)
+
+# # Print the updated list
+# print("Updated list after removing element at index 2:")
+# print(cities)
+#
+# # Print the removed city
+# print("Removed city:", removed_city)
+
+# ********************************** Create a dictionary object **********************************************************************
+# country_capital_dict = {
+#     "India": "Delhi",
+#     "Canada": "Ottawa",
+#     "United Kingdom": "London",
+#     "France": "Paris",
+#     "Germany": "Berlin"
+# }
+
+# # Print only the names of countries (keys)
+# country_names = list(country_capital_dict.keys())
+# print("Names of Countries:")
+# for country in country_names:
+#     print(country)
+
+# ------------------------- Insert one more value-------------------------------------------------
+# Existing dictionary of countries and capitals
+# country_capital_dict = {
+#     "India": "Delhi",
+#     "Canada": "Ottawa",
+#     "United Kingdom": "London",
+#     "France": "Paris",
+#     "Germany": "Berlin"
+# }
+
+# # Insert one more country and its capital
+# new_country = "Italy"
+# new_capital = "Rome"
+# country_capital_dict[new_country] = new_capital
+
+# # Print the updated dictionary
+# country_names = list(country_capital_dict.keys())
+# print("Names of Countries:")
+# for country in country_names:
+#     print(country)
+
+# ------Print the length of the dictionary----------------------------------------------------------------------------------------------------
+# # Create a dictionary of countries and capitals
+# country_capital_dict = {
+#     "India": "Delhi",
+#     "Canada": "Ottawa",
+#     "United Kingdom": "London",
+#     "France": "Paris",
+#     "Germany": "Berlin"
+# }
+# # Print the length of the dictionary
+# dictionary_length = len(country_capital_dict)
+# print("Length of the Dictionary:", dictionary_length)
+
+# -------Remove an element from the dictionary---------------------------------------------------------------------------
+# # Existing dictionary of countries and capitals
+# country_capital_dict = {
+#     "India": "Delhi",
+#     "Canada": "Ottawa",
+#     "United Kingdom": "London",
+#     "France": "Paris",
+#     "Germany": "Berlin"
+# }
+
+# # Remove a specific element by key
+# remove = "Canada"
+# if remove in country_capital_dict:
+#     del country_capital_dict[remove]
+#
+#
+# # Print the updated dictionary
+# country_names = list(country_capital_dict.keys())
+# print("Names of Countries:")
+# for country in country_names:
+#     print(country)
+
+# ************************************ Describe the feature class Spatial reference ************************************************
+# # path to the feature class
+# fc_path = r''
+
+# # Describe the feature class
+# desc = arcpy.Describe(fc_path)
+
+# # Access and print specific properties
+# print(f"Spatial Reference Name: {desc.spatialReference.name}")
+
+# ------------------------ Feature type -----------------------------------------------------------------------------------------------
+# # Specify the path to the feature class
+# fc_path = r''
+#
+# # Describe the feature class
+# desc = arcpy.Describe(fc_path)
+#
+# # Access and print specific properties
+# print(f"Shape Type: {desc.shapeType}")
+
+# ------------------------ Field names and its respective type. ----------------------------------------------------------------------------------
+# # Specify the path to the feature class
+# fc_path = r''
+
+# # Describe the feature class
+# desc = arcpy.Describe(fc_path)
+
+# # Access and print specific properties
+# print(f"Feature Class Name: {desc.name}")
+# print(f"Data Type: {desc.dataType}")
+
+# ***********************************escribe the  raster from the RASTER_DATA ********************************************
+# --Band count-------------------------------------------------------------------------------------------
+# # Specify the path to the raster dataset
+# raster_path = r''
+
+# # Describe the raster dataset
+# desc = arcpy.Describe(raster_path)
+
+# # Print the requested information
+# print(f"Band Count: {desc.bandCount}")
+
+# -------Format -----------------------------------------------------------------------------------------------
+# # Specify the path to the raster dataset
+# raster_path = r''
+#
+# # Describe the raster dataset
+# desc = arcpy.Describe(raster_path)
+#
+# # Print the requested information
+# print(f"Format: {desc.format}")
+
+# ------- Image Base Name --------------------------------------------------------------------------------
+# # Specify the path to the raster dataset
+# raster_path = r""
+
+# # Describe the raster dataset
+# desc = arcpy.Describe(raster_path)
+
+# # Print the requested information
+# print(f"Base Name: {desc.basename}")
+
+# ---------Image height and width---------------------------------------------------------------------------
+# Create a Describe object from the raster band
+desc = arcpy.Describe(r"")
+
+# Print some raster band properties
+
+print("Height: %d" % desc.height)
+print("Width:  %d" % desc.width)
+
+#***********************************************************************************************************************
+import arcpy
+import os
+# # Set the workspace (replace with your workspace path)
+# arcpy.env.workspace= 'GDB'
+#
+# # Get a list of feature classes in the workspace
+# feature_classes = arcpy.ListFeatureClasses()
+#
+# # Iterate through the list and print the names
+# for feature_class in feature_classes:
+#     print(feature_class)
+
+# ----------Open an already existing text file ---------------------------------------------------------------------------
+# # Specify the path to the text file
+# file_path = '.txt'
+
+# # Open the file in read mode with 'utf-8' encoding
+# try:
+#     with open(file_path, 'r', encoding='utf-8') as file:
+#         for line in file:
+#             print(line, end="")
+# except FileNotFoundError:
+#     print(f"The file '{file_path}' does not exist")
+# except Exception as e:
+#     print(f"An error occurred: {e}")
+# ---------- Document field properties feature class into a text file ----------------------------------------------------------------------------------------------------------------------------------------
+
+# --------------------------------------------------------------------------------------------------------------------------------------------------
+# # Step 1: Import required modules and set workspace
+# arcpy.env.workspace = r".gdb"
+
+# # Step 2: Create a list of fields from the feature class
+# feature_class_name = "MajorAttractions"
+# fields = arcpy.ListFields(feature_class_name)
+#
+# # Step 3: Open a new text file and add header lines
+# output_folder = r"D:\1_BVIEER\3rd_sem\Programming for GIS- III Mr. Ronit Jadhav\Assignments\Assignment_3"
+# output_file_name = "MajorAttractions_FieldInfo.txt"
+# output_file_path = os.path.join(output_folder, output_file_name)
+#
+# with open(output_file_path, 'w') as file_obj:
+#     file_obj.write(f"Field properties for the '{feature_class_name}' feature class:\n\n")
+#
+#     # Step 4: Loop through the list of fields
+#     for field in fields:
+#         # Step 5: Write each field's properties to the text file
+#         file_obj.write(f"Field Name: {field.name}\n")
+#         file_obj.write(f"Data Type: {field.type}\n")
+#         file_obj.write(f"Length: {field.length}\n")
+#         file_obj.write(f"Scale: {field.scale}\n")
+#         file_obj.write("\n")
+# # Step 6: Indicate that the script is completed
+# print(f"Field properties have been written to {output_file_path}")
+
+# ------ Conditional Buffer -------------------------------------------------------------------------------------------------------
+# Set the workspace
+arcpy.env.workspace = r".gdb"
+# List all feature classes in the workspace
+fc_list = arcpy.ListFeatureClasses()
+# Loop through each feature class
+for fc in fc_list:
+    # Describe the feature class to get its shape type
+    desc_obj = arcpy.Describe(fc)
+    shape_type = desc_obj.shapeType
+
+    # Set buffer distances based on shape type
+    if shape_type == "Point":
+        buffer_distance = 450  # 450 feet
+    elif shape_type == "Polyline":
+        buffer_distance = 1500  # 1500 feet
+    elif shape_type == "Polygon":
+        buffer_distance = 500  # 500 feet
+    # Create an output buffer feature class
+    output_buffer = fc + "_Buffer"
+
+    # Perform the buffer analysis using the specified buffer distance
+    arcpy.analysis.Buffer(fc, output_buffer, f"{buffer_distance} feet")
+    print(f"Buffer created for {fc} with a {buffer_distance} buffer distance.")
+    print("Process Completed")
+
+
