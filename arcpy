@@ -107,16 +107,42 @@ os.path.join(output_folder,output_CAD_file)
  arcpy.conversion.ExportCAD(fc_input_path, "DWG_R2018", 
 full_output_CAD_path,"USE_FILENAMES_IN_TABLES","OVERWRITE_EXISTING_FILES"
 
-** Get the list of maps in the current ProProject****************************************************
+*********** Get the list of maps in the current ProProject****************************************************
 import arcpy
 pro_project_path = r".aprx"
 
+my_project = arcpy.mp.ArcGISProject(pro_project_path)
+map_list = my_project.listMaps()
+for map in map_list:
+    print(map.name)
+    if map.name == "Current":
+        lyr_list = map.listLayers()
+        for lyr in lyr_list:
+            print(lyr.name)
 
+layout_list =  my_project.listLayouts()
 
-
-
-
-
+for layout in layout_list:
+    if layout.name == "Layout":
+        output_path = r".pdf"
+        layout.exportToPDF(output_path)
+    print("completed")
+******************* List the Layout Name******************************************************************************
+import arcpy
+pro_project_path = r"Project.aprx"
+my_project = arcpy.mp.ArcGISProject(pro_project_path)
+layout_list = my_project.listLayouts()
+for layout in layout_list:
+print('layout name : {}'.format(layout.name))
+********************** Jupyter Notebook*******************************************************************************
+import arcgis
+my_gis = arcgis.GIS("https://bvieer.maps.arcgis.com" "Rahim_Biswas", "pass")
+----------------------search-------------------------------
+search_result = my_gis.content.search("title:trip")
+---------------------- display all the contents type webmap----------------------
+my_gis.content.search("owner:Rahim_Biswas",item_type ="Web Map")
+---------------------------------Display all the users -----------------------
+my_gis.users.search()
 
 # ****************************** Arithmetic operations ************************************************************
 # number_1 = 45
